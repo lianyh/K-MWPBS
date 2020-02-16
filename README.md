@@ -1,4 +1,4 @@
-# K-MWBPS (Top-K Maximum Weight Pathway Constrained Bipartite Subgraph)
+# K-MWPBS (Top-K Maximum Weight Pathway Constrained Bipartite Subgraph)
 --------------------------------
 *Prerequisite*
 --------------------------------
@@ -9,7 +9,7 @@ networkx version 2.4<br/>
 
 Command:
 ------------------------------
-python KMWBPS.py uniq_gene_list discover_me_gene_pairs kegg_pathway.gmt kwbps_plot_res > kwbps_results <br/>
+python KMWPBS.py uniq_gene_list discover_me_gene_pairs kegg_pathway.gmt kwbps_plot_res > kwbps_results <br/>
 
 Input parameters:<br/>
 uniq_gene_list: file contains unique gene list found in discover_me_gene_pairs<br/>
