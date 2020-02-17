@@ -167,6 +167,7 @@ def subRoutine(p,k,j):
 	colorList=['red','yellow','blue','green','brown','cyan']
 	b=[]
 	b=[100,50, 25, 15, 10, 5]
+	r=30
 
 	start=10
 	mx=0
@@ -189,8 +190,8 @@ def subRoutine(p,k,j):
 			chosen_list.append(tuple(xx))
 			n_nodes=sixSets[xx[0]]
 			m_nodes=sixSets[xx[1]]
-			G.add_nodes_from(n_nodes,color=colorList[xx[0]])
-			G.add_nodes_from(m_nodes,color=colorList[xx[1]])
+			G.add_nodes_from(n_nodes,color=[colorList[xx[0]]])
+			G.add_nodes_from(m_nodes,color=[colorList[xx[1]]])
 			#print("n_nodes="+str(n_nodes))
 			#print("m_nodes="+str(m_nodes))
 
@@ -215,8 +216,23 @@ def subRoutine(p,k,j):
 	for i in range(0,j):
 			kx=mx+i
 			ri=random.sample(range(0,6),1)
-			H.add_node(kx,color=colorList[ri[0]])
-			
+			H.add_node(kx,color=[colorList[ri[0]]])
+
+	#get all my nodes
+	nodes_all=H.nodes()
+	
+	#add colors to a subset of random nodes of graph H
+	r_counter=0
+	while r_counter < r:
+		i=random.sample(nodes_all,1)[0]
+		lcolor=H.node[i]['color']
+		idx=random.choice(range(6))
+		c=colorList[idx]
+		if not c in lcolor:
+			lcolor.append(c)
+			H.node[i]['color']=lcolor
+			r_counter += 1
+
 
 	#randomly add new edges k
 	k_counter=0
@@ -244,18 +260,20 @@ def subRoutine(p,k,j):
 
 	for p in H.nodes():
 		#print("********** p="+str(p)+",H nodes="+str( H.node[p]))
-		if H.node[p]['color']=='red':
-			pathwayDict['pathway_red'].add(int(p))
-		if H.node[p]['color']=='yellow':
-			pathwayDict['pathway_yellow'].add(int(p))
-		if H.node[p]['color']=='blue':
-			pathwayDict['pathway_blue'].add(int(p))
-		if H.node[p]['color']=='green':
-			pathwayDict['pathway_green'].add(int(p))
-		if H.node[p]['color']=='brown':
-			pathwayDict['pathway_brown'].add(int(p))
-		if H.node[p]['color']=='cyan':
-			pathwayDict['pathway_cyan'].add(int(p))
+		rColor= H.node[p]['color']
+		for rsubset in rColor:
+			if rsubset=='red':
+				pathwayDict['pathway_red'].add(int(p))
+			if rsubset=='yellow':
+				pathwayDict['pathway_yellow'].add(int(p))
+			if rsubset=='blue':
+				pathwayDict['pathway_blue'].add(int(p))
+			if rsubset=='green':
+				pathwayDict['pathway_green'].add(int(p))
+			if rsubset=='brown':
+				pathwayDict['pathway_brown'].add(int(p))
+			if rsubset=='cyan':
+				pathwayDict['pathway_cyan'].add(int(p))
 
 	isbipartiteList=[]
 	#run ILP
