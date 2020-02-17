@@ -153,10 +153,11 @@ def mkArgParser():
 	parser.add_argument("p", help="p Probability for edge creation, i.e. 0.2")
 	parser.add_argument("k", help="k add k new edges to the graph G, i.e.  2")
 	parser.add_argument("j", help="j new nodes")
+	parser.add_argument("r", help="r random colors to be added to existing nodes")
 
 	return parser
 
-def subRoutine(n,m,p,k,x):
+def subRoutine(n,m,p,k,x,r):
 
 	weight_total_G=0	
 	#simulated small known bipartite graph with node attribute as color
@@ -185,16 +186,30 @@ def subRoutine(n,m,p,k,x):
 	t_nm=n+m
 	for c in colors:
 		for i in range(0,x):
-			H.add_node(t_nm,color=c)
+			H.add_node(t_nm,color=[c])
 			#print("*********** add node t_m="+str(t_nm))
 			t_nm += 1
 	
 	for i in H.nodes():
 		if i in G_top:
-			H.node[i]['color']='red'
+			H.node[i]['color']=['red']
 		if i in G_bottom:
-			H.node[i]['color']='yellow'
-
+			H.node[i]['color']=['yellow']
+	
+	#get all my nodes
+	nodes_all=H.nodes()
+	
+	#add colors to a subset of random nodes of graph H
+	r_counter=0
+	while r_counter < r:
+		i=random.sample(nodes_all,1)[0]
+		lcolor=H.node[i]['color']
+		idx=random.choice(range(3))
+		c=colors[idx]
+		if not c in lcolor:
+			lcolor.append(c)
+			H.node[i]['color']=lcolor
+			r_counter += 1
 
 	#add new edges k
 	k_counter=0
@@ -217,13 +232,14 @@ def subRoutine(n,m,p,k,x):
 	pathwayDict['pathway_black']=set()
 
 	for p in H.nodes():
-		if H.node[p]['color']=='red':
-			pathwayDict['pathway_red'].add(int(p))
-		if H.node[p]['color']=='yellow':
-			pathwayDict['pathway_yellow'].add(int(p))
-		if H.node[p]['color']=='black':
-			pathwayDict['pathway_black'].add(int(p))
-	
+		rColor= H.node[p]['color']
+		for rsubset in rColor:
+			if rsubset=='red':
+				pathwayDict['pathway_red'].add(int(p))
+			if rsubset=='yellow':
+				pathwayDict['pathway_yellow'].add(int(p))
+			if rsubset=='black':
+				pathwayDict['pathway_black'].add(int(p))
 
 	isbipartite=0
 	#run ILP
@@ -258,11 +274,13 @@ if __name__ == '__main__':
 	p=float(args.p)
 	k=int(args.k)
 	j=int(args.j)
+	r=int(args.r)
+
 	x=int(j/3)
 
-	file1 = open("simulateres","a")
+	file1 = open("simulateres2","a")
 	for i in range(0,10):
-		num_node_G,num_edge_G,num_node_H,num_edge_H,num_node_ILP,num_edge_ILP,lcolor,rcolor,isbipartite=subRoutine(n,m,p,k,x)
-		file1.write(str(n)+"\t"+str(m)+"\t"+str(p)+"\t"+str(k)+"\t"+str(j)+"\t"+str(num_node_G)+"\t"+str(num_edge_G)+"\t"+str(num_node_H)+"\t"+str(num_edge_H)+"\t"+str(num_node_ILP)+"\t"+str(num_edge_ILP)+"\t"+str(lcolor)+"\t"+str(rcolor)+"\t"+str(isbipartite)+"\n")
+		num_node_G,num_edge_G,num_node_H,num_edge_H,num_node_ILP,num_edge_ILP,lcolor,rcolor,isbipartite=subRoutine(n,m,p,k,x,r)
+		file1.write(str(n)+"\t"+str(m)+"\t"+str(p)+"\t"+str(k)+"\t"+str(j)+"\t"+str(r)+"\t"+str(num_node_G)+"\t"+str(num_edge_G)+"\t"+str(num_node_H)+"\t"+str(num_edge_H)+"\t"+str(num_node_ILP)+"\t"+str(num_edge_ILP)+"\t"+str(lcolor)+"\t"+str(rcolor)+"\t"+str(isbipartite)+"\n")
 
 	file1.close() 
