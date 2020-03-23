@@ -152,10 +152,7 @@ def mkArgParser():
   return parser
 
 if __name__ == '__main__':
-	#coverageCounts = processSamFile(samfile, deviation, bed)
-	#Ignore SIG_PIPE and don't throw exceptions on it... (http://docs.python.org/library/signal.html)
 	signal(SIGPIPE,SIG_DFL)
-
 	args = mkArgParser().parse_args()
 
 	#Read gene list and add the node (gene) to graph G
