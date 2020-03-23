@@ -9,17 +9,17 @@ networkx version 2.4<br/>
 
 Command:
 ------------------------------
-python KMWPBS.py uniq_gene_list discover_me_gene_pairs kegg_pathway.gmt kwbps_plot_res > kwbps_results <br/>
+python KMWPBS.py uniq_gene_list discover_me_gene_pairs kegg_pathway.gmt kmwpbs_plot_res > kmwpbs_results <br/>
 
 Input parameters:<br/>
 uniq_gene_list: file contains unique gene list found in discover_me_gene_pairs<br/>
 discover_me_gene_pairs: discover mutual exclusivity gene pairs with third column as p-value (cut-off < 0.05)<br/>
 kegg_pathway.gmt: kegg pathway<br/>
-kwbps_plot_res: output KMWPBS plot name<br/>
-kwbps_results: kwbps print out results, bipartite graph KMWPBS results<br/>
+kmwpbs_plot_res: output KMWPBS plot name<br/>
+kmwpbs_results: kwbps print out results, bipartite graph KMWPBS results<br/>
 
 Output:<br/>
-.png plot (with kwbps_plot_res name)<br/>
+.png plot (with kmwpbs_plot_res name)<br/>
 KMWPBS bipartite results <br/>
 
 
