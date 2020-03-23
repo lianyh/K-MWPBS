@@ -15,12 +15,12 @@ Input parameters:<br/>
 uniq_gene_list: file contains unique gene list found in discover_me_gene_pairs<br/>
 discover_me_gene_pairs: discover mutual exclusivity gene pairs with third column as p-value (cut-off < 0.05)<br/>
 kegg_pathway.gmt: kegg pathway<br/>
-kwbps_plot_res: output kmwbps plot name<br/>
-kwbps_results: kwbps print out results, bipartite graph kwbps results<br/>
+kwbps_plot_res: output KMWPBS plot name<br/>
+kwbps_results: kwbps print out results, bipartite graph KMWPBS results<br/>
 
 Output:<br/>
 .png plot (with kwbps_plot_res name)<br/>
-kwbps bipartite results <br/>
+KMWPBS bipartite results <br/>
 
 
 Simulation Command:
