@@ -16,7 +16,7 @@ uniq_gene_list: file contains unique gene list found in discover_me_gene_pairs<b
 discover_me_gene_pairs: discover mutual exclusivity gene pairs with third column as p-value (cut-off < 0.05)<br/>
 kegg_pathway.gmt: kegg pathway<br/>
 kmwpbs_plot_res: output KMWPBS plot name<br/>
-kmwpbs_results: kwbps print out results, bipartite graph KMWPBS results<br/>
+kmwpbs_results: kmwpbs print out results, bipartite graph KMWPBS results<br/>
 
 Output:<br/>
 .png plot (with kmwpbs_plot_res name)<br/>
