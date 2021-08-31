@@ -224,14 +224,15 @@ if __name__ == '__main__':
 		
 		#RUN ILP
 		B=runILP(G,pathwayDict,pathwayIDName)
-		number_of_nodes_B=len(B)
-		number_of_edges_B= B.number_of_edges()
-		weight_total_B = B.size(weight='weight')
-
 		if is_empty(B):
 			print("B is empty, no results! End Here!")
 			break
 		print("----------------------- Bipartite Extracted Results ----------------------")
+
+		number_of_nodes_B=len(B)
+		number_of_edges_B= B.number_of_edges()
+		weight_total_B = B.size(weight='weight')
+
 
 		if bipartite.is_bipartite(B):
 			print("B is Bipartite graph")
